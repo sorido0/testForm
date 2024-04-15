@@ -14,7 +14,7 @@ on:
         type: string
 
 env:
-  DEPLOYMENT_FOLDER: .vercel
+  DEPLOYMENT_FOLDER: dist
 
 jobs:
 # Please do not rename this job
@@ -36,7 +36,9 @@ jobs:
         env:
           CI: true
           SITE_URL: ${{ inputs.site-url }}
-        run: npm ci
+        run: |
+          npm ci
+          npm run build
 
 # Please do not touch the following action
       - name: Store deployment content
@@ -44,7 +46,7 @@ jobs:
         with:
           api-key: ${{ secrets.IONOS_API_KEY }}
           service-host: api-us.ionos.space
-          project-id: 77b81f3e-9811-44be-bfb9-97722b12dcc6
+          project-id: 923b53ae-776c-488d-abad-9522cfec5c6f
           branch-id: ${{ inputs.branch-id }}
           version: ${{ github.sha }}
           folder: ${{ env.DEPLOYMENT_FOLDER }}
